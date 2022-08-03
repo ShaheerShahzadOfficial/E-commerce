@@ -25,7 +25,8 @@ import { ClearError } from './Components/Redux/Actions/ProductsActions';
 import ResetUsersPassword from './Components/Screens/Authentication/ResetPassword/ResetPassword';
 import ShippingInfo from "./Components/Screens/ShippingInfo/SaveShippingInfo"
 import ConfirmOrder from "./Components/Screens/ConfirmedOrder/Confirmation.js"
-
+import MyOrders from "./Components/Screens/MyOrders/MyOrders.js"
+import MyOrderDetail from "./Components/Screens/MyOrders/MyOrderDetail.js"
 function App() {
   const dispatch = useDispatch()
 
@@ -59,6 +60,10 @@ function App() {
       <ProtectedRoutes exact path={"/UpdatePassword"} component={UpdateUserPassword} />
       <ProtectedRoutes exact path={"/shipping"} component={ShippingInfo} />
       <ProtectedRoutes exact path={"/order/confirm"} component={ConfirmOrder} />
+      <ProtectedRoutes exact path={"/Myorders"} component={MyOrders} />
+      <ProtectedRoutes exact path={"/order/:id"} component={MyOrderDetail} />
+
+
 
 
       <Footer />

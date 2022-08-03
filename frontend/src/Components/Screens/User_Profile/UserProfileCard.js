@@ -48,7 +48,7 @@ const UserProfileCard = () => {
                             </div>
 
                             <div>
-                                <Link to={"/orders"}>My Order</Link>
+                                <Link to={"/Myorders"}>My Order</Link>
                                 <Link to={"/UpdatePassword"}>Change Password</Link>
                             </div>
 

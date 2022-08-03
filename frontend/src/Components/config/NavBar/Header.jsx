@@ -20,7 +20,7 @@ const Header = () => {
             // link2ColorHover="purple"
             // link3ColorHover="purple"
             // link4ColorHover="purple"
-            link2Text="Product"
+            link2Text="Products"
             link3Text="Contact"
             link4Text="About"
             link1Url="/"

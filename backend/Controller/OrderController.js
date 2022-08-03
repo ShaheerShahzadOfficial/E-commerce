@@ -54,6 +54,20 @@ const GetSingleOrder = async (req, res, next) => {
 
 }
 
+const GetOrderDetail = async (req, res, next) => {
+    const order = await Order.findById(req.params.id).populate("User", "name  email")
+
+    if (!order) {
+        return next(new ErrorHandler("Order Not Found With This Id", 404))
+    }
+
+    res.status(200).json({
+        success: true,
+        order
+    })
+
+}
+
 // // // Get Logged In User Order
 const MyOrder = async (req, res, next) => {
     const orders = await Order.find({ User: req.user.id })
@@ -165,4 +179,4 @@ const DeleteOrder = async (req, res, next) => {
 
 
 
-export { NewOrder, GetSingleOrder, MyOrder, GetAllOrder, updateOrderStatus, DeleteOrder }                                      
+export { NewOrder, GetSingleOrder, MyOrder, GetAllOrder, updateOrderStatus, DeleteOrder, GetOrderDetail }                                      

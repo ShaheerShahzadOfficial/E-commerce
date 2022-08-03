@@ -33,7 +33,7 @@ const UserOptions = () => {
     let history = useHistory()
 
     const order = () => {
-        history.push("/order")
+        history.push("/Myorders")
     }
 
 

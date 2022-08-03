@@ -37,7 +37,7 @@ const Confirmation = ({ history }) => {
 
 
 
-    const PlanOrder = () => {
+    const PlaceOrder = () => {
         dispatch(CreateOrder(shippingInfo, cartItem, subtotal, shippingCharges, totalPrice))
         Swal.fire("Order Alert", "Order Has been Placed", "success")
         history.push("/")
@@ -117,7 +117,7 @@ const Confirmation = ({ history }) => {
                                 </div>
 
                             </div>
-                            <button className="placeOrderBtn" onClick={PlanOrder}>Place Order</button>
+                            <button className="placeOrderBtn" onClick={PlaceOrder}>Place Order</button>
 
                         </div>
 
