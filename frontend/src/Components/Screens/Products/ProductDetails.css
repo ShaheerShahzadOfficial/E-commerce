@@ -195,8 +195,8 @@ font: bolder 1.4vmax "Roboto";
   padding: 1vmax;
   width: 4vmax;
 }
-
- input {
+    
+.input {
   /* padding: 1.5vmax; */
   width: 3vmax;
   font: 400 1.8vmax "Roboto";

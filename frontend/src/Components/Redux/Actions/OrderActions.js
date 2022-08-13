@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CREATE_NEW_ORDER, CREATE_NEW_ORDER_FAIL, CREATE_NEW_ORDER_REQUEST, MY_ORDER, MY_ORDER_FAIL, MY_ORDER_REQUEST, ORDER_DETAILS, ORDER_DETAILS_FAIL, ORDER_DETAILS_REQUEST } from "../Constants/constant"
+import { ALL_ORDER, ALL_ORDER_FAIL, ALL_ORDER_REQUEST, CREATE_NEW_ORDER, CREATE_NEW_ORDER_FAIL, CREATE_NEW_ORDER_REQUEST, DELETE_ORDER, DELETE_ORDER_FAIL, DELETE_ORDER_REQUEST, MY_ORDER, MY_ORDER_FAIL, MY_ORDER_REQUEST, ORDER_DETAILS, ORDER_DETAILS_FAIL, ORDER_DETAILS_REQUEST, UPDATE_ORDER, UPDATE_ORDER_FAIL, UPDATE_ORDER_REQUEST } from "../Constants/constant"
 
 const CreateOrder = (
     shippingInfo,
@@ -13,7 +13,7 @@ const CreateOrder = (
         })
 
 
-        axios.post("http://localhost:4000/order/createOrder",
+        axios.post("/order/createOrder",
             {
                 shippingInfo,
                 orderItem,
@@ -50,7 +50,7 @@ const MyOrder = () => async (dispatch) => {
     })
 
 
-    axios.get("http://localhost:4000/order/myOrder",
+    axios.get("/order/myOrder",
 
         {
             withCredentials: true,
@@ -80,7 +80,7 @@ const GetOrderDetail = (id) => async (dispatch) => {
     })
 
 
-    axios.get(`http://localhost:4000/order/getOrderDetail/${id}`,
+    axios.get(`/order/getOrderDetail/${id}`,
 
         {
             withCredentials: true,
@@ -94,6 +94,36 @@ const GetOrderDetail = (id) => async (dispatch) => {
     }).catch((err) => {
         dispatch({
             type: ORDER_DETAILS_FAIL,
+            payload: err.response.data
+        })
+    });
+
+
+}
+
+
+const AdminAllOrder = () => async (dispatch) => {
+
+    dispatch({
+        type: ALL_ORDER_REQUEST
+    })
+
+
+    axios.get("/order/myOrder",
+
+        {
+            withCredentials: true,
+            credentials: "include",
+            headers: { "Content-Type": "application/json" }
+        }
+    ).then((result) => {
+        dispatch({
+            type: ALL_ORDER,
+            payload: result.data.orders
+        })
+    }).catch((err) => {
+        dispatch({
+            type: ALL_ORDER_FAIL,
             payload: err.response.data.message
         })
     });
@@ -102,8 +132,51 @@ const GetOrderDetail = (id) => async (dispatch) => {
 }
 
 
+const deleteOrder = (id) => async (dispatch) => {
+    dispatch({ type: DELETE_ORDER_REQUEST });
+
+
+    await axios.delete(`/order/admin/deleteOrder//${id}`).then((result) => {
+        dispatch({
+            type: DELETE_ORDER,
+            payload: result.data.success,
+        });
+    }).catch((err) => {
+        dispatch({
+            type: DELETE_ORDER_FAIL,
+            payload: err.response.data,
+        });
+    });
+
+
+};
+
+
+const UpdateOrderStatus = (id, status) => async (dispatch) => {
+    dispatch({ type: UPDATE_ORDER_REQUEST });
+
+
+    await axios.put(`/order/admin/updateOrderStatus/${id}`, { status }).then((result) => {
+        dispatch({
+            type: UPDATE_ORDER,
+            payload: result.data.success,
+        });
+    }).catch((err) => {
+        dispatch({
+            type: UPDATE_ORDER_FAIL,
+            payload: err.response.data,
+        });
+    });
+
+
+};
+
+// 
 export {
     CreateOrder,
     MyOrder,
-    GetOrderDetail
+    GetOrderDetail,
+    AdminAllOrder,
+    deleteOrder,
+    UpdateOrderStatus
 }

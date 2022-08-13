@@ -7,10 +7,12 @@ import { useDispatch, useSelector } from "react-redux"
 import { CreateOrder } from "../../Redux/Actions/OrderActions"
 import Loader from "../../config/Loader/loader"
 import Swal from "sweetalert2"
+
+
 const Confirmation = ({ history }) => {
     const { shippingInfo, cartItem } = useSelector(state => state.cart)
     const { user } = useSelector(state => state.Authentication)
-    const { loading, order } = useSelector(state => state.orders)
+    const { loading } = useSelector(state => state.orders)
 
 
 
@@ -25,7 +27,7 @@ const Confirmation = ({ history }) => {
 
     let shippingCharges;
 
-    if (shippingInfo.city.toLowerCase() === "karachi") {
+    if (shippingInfo?.city.toLowerCase() === "karachi") {
         shippingCharges = 250;
     } else {
         shippingCharges = 350
@@ -33,7 +35,7 @@ const Confirmation = ({ history }) => {
 
     const totalPrice = subtotal + shippingCharges;
 
-    const address = `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.postalCode}`;
+    const address = `${shippingInfo?.address}, ${shippingInfo?.city}, ${shippingInfo?.state}, ${shippingInfo?.postalCode}`;
 
 
 
@@ -61,11 +63,11 @@ const Confirmation = ({ history }) => {
                                 <div className="confirmshippingAreaBox">
                                     <div>
                                         <p>Name:</p>
-                                        <span>{user.name}</span>
+                                        <span>{user?.name}</span>
                                     </div>
                                     <div>
                                         <p>Phone:</p>
-                                        <span>{shippingInfo.phoneNumber}</span>
+                                        <span>{shippingInfo?.phoneNumber}</span>
                                     </div>
                                     <div>
                                         <p>Address:</p>

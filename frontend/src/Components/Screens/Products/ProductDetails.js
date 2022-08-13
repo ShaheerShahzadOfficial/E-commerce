@@ -14,7 +14,7 @@ import { AddToCart } from "../../Redux/Actions/CartActions"
 import Swal from "sweetalert2"
 
 const ProductDetails = () => {
-    const [ProdutDetail, setProdutDetail] = useState([])
+    const [ProdutDetail, setProductDetail] = useState([])
     const [quantity, setQuantity] = useState(1)
     const [comment, setComment] = useState("")
     const [open, setOpen] = useState(false);
@@ -29,15 +29,16 @@ const ProductDetails = () => {
     const { id } = useParams()
 
     useEffect(() => {
-        dispatch(GetProductDetail(id))
 
         if (loading) {
             <div style={{ margin: "10px" }}>
                 <Loader />
             </div>
+        } else {
+            dispatch(GetProductDetail(id))
+            setProductDetail([product])
         }
 
-        setProdutDetail([product])
 
     }, [dispatch, id, loading, product])
 
@@ -48,7 +49,7 @@ const ProductDetails = () => {
         color: "grey",
         activeColor: "yellow",
         size: window.innerWidth < 600 ? 20 : 30,
-        value: product && product.Ratings,
+        value: product && product?.Ratings,
         isHalf: true,
         borderColor: "grey"
     }
@@ -97,26 +98,26 @@ const ProductDetails = () => {
                         <div className="card">
                             <Carousel className="Carousel" showThumbs={false} showArrows={true} autoPlay={true} showStatus={true} infiniteLoop={true} interval={5000} dynamicHeight={true}>
                                 {
-                                    product.images && product.images.map((item, i) => (
+                                    product?.images && product?.images?.map((item, i) => (
                                         <img key={i} src={item.url} alt={items.name} />
                                     ))
                                 }
                             </Carousel>
 
-                            <h2>Name: {items.name}</h2>
-                            <p className="price">Price: Rs {items.price}</p>
-                            <p><strong>Description: </strong> {items.description}</p>
-                            <p><b> Status </b> <b className={items.Stock < 1 ? "Red" : "Green"}>{items.Stock < 1 ? "Out Of  Stock" : "InStock"}</b></p>
+                            <h2>Name: {items?.name}</h2>
+                            <p className="price">Price: Rs {items?.price}</p>
+                            <p><strong>Description: </strong> {items?.description}</p>
+                            <p><b> Status </b> <b className={items?.Stock < 1 ? "Red" : "Green"}>{items?.Stock < 1 ? "Out Of  Stock" : "InStock"}</b></p>
                             <div className="quantityIncrease">
 
                                 <div className="detailsBlock-3-1">
                                     <div className="detailsBlock-3-1-1">
                                         <button onClick={decreaseQuantity}>-</button>
-                                        <input readOnly type="number" value={quantity} />
+                                        <input readOnly type="number" className="input" value={quantity} />
                                         <button onClick={increaseQuantity}>+</button>
                                     </div>
                                     <button
-                                        disabled={product.Stock < 1 ? true : false}
+                                        disabled={product?.Stock < 1 ? true : false}
                                         onClick={() => {
                                             dispatch(AddToCart(id, quantity))
                                             Swal.fire("", "Item Added to the Cart", "success")

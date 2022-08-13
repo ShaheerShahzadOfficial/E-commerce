@@ -28,9 +28,9 @@ const UpdateUserProfile = () => {
 
         if (!loading) {
             if (user) {
-                setName(user.name)
-                setEmail(user.email)
-                setAvatarPreview(user.avatar && user.avatar.url)
+                setName(user?.name)
+                setEmail(user?.email)
+                setAvatarPreview(user?.avatar && user?.avatar?.url)
             }
         }
 
@@ -98,14 +98,14 @@ const UpdateUserProfile = () => {
                         <div>
                             <AccountCircleSharpIcon />
 
-                            <input type={"text"} placeholder='Name' value={Name} onChange={event => setName(event.target.value)} />
+                            <input type={"text"} className="passwordField" placeholder='Name' value={Name} onChange={event => setName(event.target.value)} />
                         </div>
                         <br />
                         <br />
                         <div>
                             <AlternateEmailSharpIcon />
 
-                            <input type={"email"} placeholder='Email' value={Email} onChange={event => setEmail(event.target.value)} />
+                            <input type={"email"} placeholder='Email' className="passwordField" value={Email} onChange={event => setEmail(event.target.value)} />
                         </div>
                         <br />
                         <br />

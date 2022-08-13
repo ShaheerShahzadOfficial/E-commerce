@@ -40,8 +40,8 @@ const UpdateUserPassword = () => {
         }
 
         if (user) {
-            setAvatarPreview(user.avatar && user.avatar.url)
-            setName(user.name)
+            setAvatarPreview(user?.avatar && user?.avatar?.url)
+            setName(user?.name)
         }
 
 
@@ -87,13 +87,13 @@ const UpdateUserPassword = () => {
                         <br />
                         <div>
                             <VpnKeyIcon />
-                            <input type={"password"} placeholder='New Password' value={Password} onChange={event => setPassword(event.target.value)} />
+                            <input type={"password"} className="passwordField" placeholder='New Password' value={Password} onChange={event => setPassword(event.target.value)} />
                         </div>
                         <br />
                         <br />
                         <div>
                             <VpnKeyIcon />
-                            <input type={"password"} placeholder='Confirm Password' value={ConfirmPassword} onChange={event => setConfirmPassword(event.target.value)} />
+                            <input type={"password"} placeholder='Confirm Password' className="passwordField" value={ConfirmPassword} onChange={event => setConfirmPassword(event.target.value)} />
                         </div>
 
                         <br />

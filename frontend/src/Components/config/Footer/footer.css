@@ -54,21 +54,9 @@ margin: 1.5vmax;
 font-size: 3.6vmax;
 color: rgb(0, 157, 255);
 font-family: "Roboto";
-/* animation: neon1 1.5s ease-in-out infinite alternate;   */
   }
 
-/* #ff1177  to blue */
 
-/* @keyframes neon1 {
-    from {
-      text-shadow: 0 0 10px rgb(0, 136, 255), 0 0 20px rgb(0, 136, 255), 0 0 30px rgb(0, 136, 255), 0 0 40px blue,
-        0 0 70px blue, 0 0 80px blue, 0 0 100px blue, 0 0 150px blue;
-    }
-    to {
-      text-shadow: 0 0 5px rgb(0, 136, 255), 0 0 10px rgb(0, 136, 255), 0 0 15px rgb(0, 136, 255), 0 0 20px blue,
-        0 0 35px blue, 0 0 40px blue, 0 0 50px blue, 0 0 75px blue;
-    }
-  } */
 
 
     .leftFooter h5{
@@ -114,7 +102,7 @@ color: rgb(255, 3, 255);
 }
 
 #facebook:hover{
-color: blue;
+color:lightseagreen;
 }
 
 

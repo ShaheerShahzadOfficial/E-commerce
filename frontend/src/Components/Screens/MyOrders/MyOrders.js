@@ -58,7 +58,7 @@ const MyOrders = () => {
         flex: 0.3,
         sortable: false,
         renderCell: (params) => (
-            <Link to={`/order/${params.getValue(params.id, "id")}`}>
+            <Link to={`/orderDetail/${params.getValue(params.id, "id")}`}>
                 <LaunchIcon color='black' fontSize='large' />
             </Link>
         )
@@ -68,12 +68,12 @@ const MyOrders = () => {
     const rows = [];
 
 
-    order && order.forEach(item => {
+    order && order?.forEach(item => {
         rows.push({
-            itemsQty: item.orderItem.length,
-            id: item._id,
-            status: item.status,
-            amount: item.totalPrice
+            itemsQty: item.orderItem?.length,
+            id: item?._id,
+            status: item?.status,
+            amount: item?.totalPrice
         })
     });
 
@@ -95,7 +95,7 @@ const MyOrders = () => {
                                 autoHeight
                             />
 
-                            <Typography className='myOrdersHeading'>{user.name}'s Orders</Typography>
+                            <Typography className='myOrdersHeading'>{user?.name}'s Orders</Typography>
 
                         </div>
 

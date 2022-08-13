@@ -1,11 +1,13 @@
 import express from 'express';
 const ProductRoute = express.Router()
-import { createProduct, CreateProductReview, deleteProduct, DeleteProductReview, getAllProduct, getProductReviews, oneProductDetail, updateProduct } from "../../Controller/productController.js"
+import { createProduct, CreateProductReview, deleteProduct, DeleteProductReview, getAllProduct, getAllProductAdmin, getProductReviews, oneProductDetail, updateProduct } from "../../Controller/productController.js"
 import { AuthenticatedUserRole, checkToken } from '../../middleware/Auth/auth.js';
 
 
 
 ProductRoute.route("/getProduct").get(getAllProduct)
+
+ProductRoute.route("/admin/getProduct").get(checkToken, AuthenticatedUserRole("Admin"), getAllProductAdmin)
 
 ProductRoute.route("/newProduct").post(checkToken, AuthenticatedUserRole("Admin"), createProduct)
 

@@ -1,6 +1,6 @@
 import axios from "axios"
 
-import { FORGOT_PASSWORD_EMAIL, FORGOT_PASSWORD_EMAIL_FAIL, LOAD_USER, LOAD_USER_FAIL, LOAD_USER_REQUEST, LOGIN_USER, LOGIN_USER_FAIL, LOGIN_USER_REQUEST, LOGOUT_USER, LOGOUT_USER_FAIL, REGISTER_USER, REGISTER_USER_FAIL, REGISTER_USER_REQUEST, UPDATE_PROFILE_RESET, UPDATE_PROFILE, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_FAIL, UPDATE_PASSWORD_REQUEST, UPDATE_PASSWORD, UPDATE_PASSWORD_FAIL, RESET_PASSWORD_EMAIL, RESET_PASSWORD_EMAIL_REQUEST, RESET_PASSWORD_EMAIL_FAIL } from "../Constants/constant";
+import { FORGOT_PASSWORD_EMAIL, FORGOT_PASSWORD_EMAIL_FAIL, LOAD_USER, LOAD_USER_FAIL, LOAD_USER_REQUEST, LOGIN_USER, LOGIN_USER_FAIL, LOGIN_USER_REQUEST, LOGOUT_USER, LOGOUT_USER_FAIL, REGISTER_USER, REGISTER_USER_FAIL, REGISTER_USER_REQUEST, UPDATE_PROFILE_RESET, UPDATE_PROFILE, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_FAIL, UPDATE_PASSWORD_REQUEST, UPDATE_PASSWORD, UPDATE_PASSWORD_FAIL, RESET_PASSWORD_EMAIL, RESET_PASSWORD_EMAIL_REQUEST, RESET_PASSWORD_EMAIL_FAIL, ADMIN_ALL_USERS_REQUEST, ADMIN_ALL_USERS_SUCCESS, ADMIN_ALL_USERS_FAIL, ADMIN_DELETE_USERS_REQUEST, ADMIN_DELETE_USERS_SUCCESS, ADMIN_DELETE_USERS_FAIL, ADMIN_UPDATE_USERS_REQUEST, ADMIN_UPDATE_USERS_SUCCESS, ADMIN_UPDATE_USERS_FAIL, USER_DETAILS_REQUEST, USER_DETAILS, USER_DETAILS_FAIL } from "../Constants/constant";
 
 
 export const RegisterUser = (name, email, password, avatar) => async (dispatch) => {
@@ -8,7 +8,7 @@ export const RegisterUser = (name, email, password, avatar) => async (dispatch) 
 
     const config = { headers: { "Content-Type": "multipart/form-data" } };
 
-    await axios.post("http://localhost:4000/user/register", {
+    await axios.post("/user/register", {
         name, email, password, avatar
     }, config).then((result) => {
         dispatch({
@@ -32,7 +32,7 @@ export const Login = (email, password) => async (dispatch) => {
 
     // const config = { headers: { "Content-Type": "application/json" } }
 
-    await axios.post("http://localhost:4000/user/login", {
+    await axios.post("/user/login", {
         email, password
     }, { withCredentials: true, credentials: "include", headers: { "Content-Type": "application/json" } }).then((result) => {
         dispatch({
@@ -53,7 +53,7 @@ export const Login = (email, password) => async (dispatch) => {
 
 export const ForgotPasswordEmail = (email) => async (dispatch) => {
 
-    await axios.post("http://localhost:4000/user/resetPassword", {
+    await axios.post("/user/resetPassword", {
         email
     }, { withCredentials: true, }).then((result) => {
         dispatch({
@@ -74,7 +74,7 @@ export const ForgotPasswordEmail = (email) => async (dispatch) => {
 
 export const Logout = () => async (dispatch) => {
 
-    await axios.get("http://localhost:4000/user/logout", {
+    await axios.get("/user/logout", {
         withCredentials: true,
     }).then(() => {
         dispatch({
@@ -98,7 +98,7 @@ export const LoadUser = () => async (dispatch) => {
         dispatch({ type: LOAD_USER_REQUEST });
 
 
-        const { data } = await axios.get("http://localhost:4000/user/userDetails", { withCredentials: true, credentials: "include" })
+        const { data } = await axios.get("/user/userDetails", { withCredentials: true, credentials: "include" })
         dispatch({
             type: LOAD_USER,
             payload: data.user
@@ -118,7 +118,7 @@ export const UpdateProfile = (name, email) => async (dispatch) => {
     dispatch({ type: UPDATE_PROFILE_REQUEST });
 
 
-    await axios.put("http://localhost:4000/user/UpdateUserProfile", {
+    await axios.put("/user/UpdateUserProfile", {
         name, email
     }, { withCredentials: true, credentials: "include" }).then((result) => {
         dispatch({
@@ -139,7 +139,7 @@ export const UpdatePassword = (newPassword, confirmPassword) => async (dispatch)
     dispatch({ type: UPDATE_PASSWORD_REQUEST });
 
 
-    await axios.put("http://localhost:4000/user/UpdatePassword", {
+    await axios.put("/user/UpdatePassword", {
         newPassword, confirmPassword
     }, { withCredentials: true, credentials: "include" }).then((result) => {
         dispatch({
@@ -160,7 +160,7 @@ export const ResetPassword = (token, password, confirmPassword) => async (dispat
     dispatch({ type: RESET_PASSWORD_EMAIL_REQUEST });
 
 
-    await axios.put(`http://localhost:4000/user/resetPassword/${token}`, {
+    await axios.put(`/user/resetPassword/${token}`, {
         password, confirmPassword
     }, { withCredentials: true, credentials: "include" }).then((result) => {
         dispatch({
@@ -174,4 +174,101 @@ export const ResetPassword = (token, password, confirmPassword) => async (dispat
         })
     });
 
+}
+
+
+
+export const AdminAllUser = () => async (dispatch) => {
+    dispatch({ type: ADMIN_ALL_USERS_REQUEST })
+
+    await axios.get("/user/GetAllUser", { withCredentials: true, credentials: "include" }).then((result) => {
+        dispatch({
+            type: ADMIN_ALL_USERS_SUCCESS,
+            payload: result.data.user
+        })
+    }).catch((err) => {
+        dispatch({
+            type: ADMIN_ALL_USERS_FAIL,
+            payload: err.response.data
+        })
+    });
+}
+
+
+export const DeleteUser = (id) => async (dispatch) => {
+    dispatch({ type: ADMIN_DELETE_USERS_REQUEST })
+
+    await axios.delete(`/user/DeleteUser/${id}`, { withCredentials: true, credentials: "include" }).then((result) => {
+        dispatch({
+            type: ADMIN_DELETE_USERS_SUCCESS,
+            payload: result.data.success
+        })
+    }).catch((err) => {
+        dispatch({
+            type: ADMIN_DELETE_USERS_FAIL,
+            payload: err.response.data
+        })
+    });
+}
+
+
+export const UpdateUserRole = (id, name, email, role) => async (dispatch) => {
+    dispatch({ type: ADMIN_UPDATE_USERS_REQUEST })
+
+    await axios.put(`/user/UpdateUserRole/${id}`, {
+        name, email, role
+    }, { withCredentials: true, credentials: "include" }).then((result) => {
+        dispatch({
+            type: ADMIN_UPDATE_USERS_SUCCESS,
+            payload: result.data.success
+        })
+    }).catch((err) => {
+        dispatch({
+            type: ADMIN_UPDATE_USERS_FAIL,
+            payload: err.response.data
+        })
+    });
+}
+
+
+
+
+
+export const getUserDetails = (id) => async (dispatch) => {
+    dispatch({ type: USER_DETAILS_REQUEST })
+
+    await axios.get(`/user/GetSingleUser/${id}`, { withCredentials: true, credentials: "include" }).then((result) => {
+        dispatch({
+            type: USER_DETAILS,
+            payload: result.data.user
+        })
+    }).catch((err) => {
+        dispatch({
+            type: USER_DETAILS_FAIL,
+            payload: err.response.data
+        })
+    });
+}
+
+
+
+
+
+// GetSingleUser
+
+
+export const GetSingleUser = (id) => async (dispatch) => {
+    dispatch({ type: LOAD_USER_REQUEST })
+
+    await axios.get(`/user/GetSingleUser/${id}`, { withCredentials: true, credentials: "include" }).then((result) => {
+        dispatch({
+            type: LOAD_USER,
+            payload: result.data.user
+        })
+    }).catch((err) => {
+        dispatch({
+            type: LOAD_USER_FAIL,
+            payload: err.response.data
+        })
+    });
 }

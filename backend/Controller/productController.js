@@ -2,11 +2,35 @@
 import Product from "../model/ProductModel.js"
 import ErrorHandler from "../utils/errorhandler.js";
 import ApiFeature from "../utils/apiFeature.js";
+import cloudinary from "cloudinary"
 
 
 //// CREATE NEW PRODUCT  --ADMIN
 
 const createProduct = async (req, res, next) => {
+    let images = [];
+
+    if (typeof req.body.images === "string") {
+        images.push(req.body.images);
+    } else {
+        images = req.body.images;
+    }
+
+    const imagesLinks = [];
+
+    for (let i = 0; i < images.length; i++) {
+        const result = await cloudinary.v2.uploader.upload(images[i], {
+            folder: "products",
+        });
+
+        imagesLinks.push({
+            public_id: result.public_id,
+            url: result.secure_url,
+        });
+    }
+
+    req.body.images = imagesLinks;
+
     req.body.User = req.user.id
     const product = await Product.create(req.body).then((result) => {
         res.status(201).json({
@@ -32,7 +56,7 @@ const createProduct = async (req, res, next) => {
 
 const getAllProduct = async (req, res) => {
 
-    const resultPerPage = 8
+    const resultPerPage = 12
     const productsCount = await Product.countDocuments()
 
     const apiFeature = new ApiFeature(Product.find(), req.query)
@@ -60,26 +84,44 @@ const getAllProduct = async (req, res) => {
 }
 
 
+//// GET ALL PRODUCT  ---Admin
+
+const getAllProductAdmin = async (req, res) => {
+
+    const products = await Product.find()
+
+    res.status(200).json({
+        success: true,
+        products,
+    })
+}
+
 
 ////UPDATE PRODUCT --ADMIN
 
 const updateProduct = async (req, res, next) => {
-    let product = await Product.findById(req.params.id)
+    try {
+        let product = await Product.findById(req.params.id)
 
-    if (!product) {
-        return next(new ErrorHandler("Product Not Found", 404))
+        if (!product) {
+            return next(new ErrorHandler("Product Not Found", 404))
+        }
+
+        product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidator: true,
+            useFindAndModify: false
+        })
+        res.status(200).json({
+            success: true,
+            product
+        })
     }
-
-    product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-        runValidator: true,
-        useFindAndModify: false
-    })
-    res.status(200).json({
-        success: true,
-        product
-    })
-
+    catch (err) {
+        res.status(500).json({
+            message: err
+        })
+    }
 }
 
 
@@ -217,4 +259,4 @@ const DeleteProductReview = async (req, res, next) => {
 }
 
 
-export { getAllProduct, createProduct, updateProduct, deleteProduct, oneProductDetail, CreateProductReview, getProductReviews, DeleteProductReview }  
+export { getAllProduct, getAllProductAdmin, createProduct, updateProduct, deleteProduct, oneProductDetail, CreateProductReview, getProductReviews, DeleteProductReview }  

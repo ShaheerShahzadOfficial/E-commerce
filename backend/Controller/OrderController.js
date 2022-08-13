@@ -125,9 +125,12 @@ const updateOrderStatus = async (req, res, next) => {
         return next(new ErrorHandler("You have already delivered this order", 404))
     }
 
-    orders.orderItem.forEach(async (order) => {
-        await updateStock(order.product, order.quantity)
-    });
+
+    if (orders.status === "Proccessing") {
+        orders.orderItem.forEach(async (order) => {
+            await updateStock(order.product, order.quantity)
+        });
+    }
 
     orders.status = req.body.status;
 

@@ -25,26 +25,26 @@ const UserProfileCard = () => {
                     <div className='ProfileContainer'>
                         <div>
                             <h1>My Profile</h1>
-                            <img src={user.avatar && user.avatar.url} alt={user.name} />
+                            <img src={user?.avatar && user?.avatar?.url} alt={user?.name} />
                             <Link to={"/updateProfile"} className="editProfile">Edit Profile</Link>
                         </div>
 
                         <div>
                             <div>
                                 <h4>Full Name</h4>
-                                <p>{user.name}</p>
+                                <p>{user?.name}</p>
                             </div>
 
 
                             <div>
                                 <h4>Email</h4>
-                                <p>{user.email}</p>
+                                <p>{user?.email}</p>
                             </div>
 
 
                             <div>
                                 <h4>Joined On</h4>
-                                <p>{String(user.createdAt).substr(0, 10)}</p>
+                                <p>{String(user?.createdAt).substr(0, 10)}</p>
                             </div>
 
                             <div>

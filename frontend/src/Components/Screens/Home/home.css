@@ -1,15 +1,12 @@
 .banner{
     background-image: linear-gradient(to right top, #079ae7, #008fe9, #0084ea, #0077ea, #006ae7, #0075ef, #007ff7, #008aff, #00acff, #00caff, #00e4fe, #5ffbf1);    height: 100vmin;
-    /* background-image: linear-gradient(to left bottom, #079ae7, #0092f0, #0088f7, #007dfc, #0070ff, #1f63f5, #2f55ea, #3b46df, #3037c8, #2429b1, #151b9b, #000c85); */
-    /* background-image: linear-gradient(to right, #0acffe 0%, #495aff 100%); */
     display: flex;
 flex-direction: column;
 text-align: center;
 align-items: center;
 justify-content: center;
 color: white;
-/* -webkit-clip-path: polygon(0 0, 100% 0, 100% 63%, 0% 100%);
-clip-path: polygon(0 0, 100% 0, 100% 63%, 0% 100%); */
+
 }
 
 

@@ -44,9 +44,10 @@ const Products = () => {
     let count = filteredProductCount
 
     const Categories = [
-        "Ladies Suit",
-        "Laptop",
-        "Phone"
+        "Gadgets",
+        "Bags",
+        "Ladies Clothes",
+        "Shoes"
     ]
 
 
@@ -62,7 +63,7 @@ const Products = () => {
 
                         filteredProductCount !== 0 ? (
                             products.map(product => (
-                                <ProductCard product={product} key={product._id} />
+                                <ProductCard product={product} key={product?._id} />
                             ))
                         ) : (
                             <h2>No Product Found</h2>

@@ -1,5 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { Backdrop, SpeedDial, SpeedDialAction } from '@mui/material'
+import { Backdrop } from '@mui/material'
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+import SpeedDial from '@mui/material/SpeedDial';
+
 
 import "./UserOptions.css"
 import userpng from "../../Image/user.png"
@@ -54,7 +57,7 @@ const UserOptions = () => {
     }
 
     const DashBoard = () => {
-        history.push("/DashBoard")
+        history.push("/admin/DashBoard")
 
 
     }
@@ -73,7 +76,7 @@ const UserOptions = () => {
     ]
 
 
-    if (user.role === "Admin") {
+    if (user?.role === "Admin") {
         options.unshift(
             { icon: <DashboardIcon />, name: "DashBoard", func: DashBoard },
         )
@@ -84,25 +87,31 @@ const UserOptions = () => {
     return (
 
         <Fragment>
-            <Backdrop open={Open} style={{ zIndex: 11 }} />
-            <SpeedDial className='speedDial' ariaLabel={user.name}
-                onOpen={() => setOpen(true)}
-                onClose={() => setOpen(false)}
-                open={Open}
-                direction="down"
-                style={{ zIndex: 11 }}
+            {user ?
+                <Fragment>
+                    <Backdrop open={Open} style={{ zIndex: 11 }} />
+                    <SpeedDial className='speedDial' ariaLabel={user?.name}
+                        onOpen={() => setOpen(true)}
+                        onClose={() => setOpen(false)}
+                        open={Open}
+                        direction="down"
+                        style={{ zIndex: 11 }}
 
-                icon={<img src={user.avatar ? user.avatar.url : userpng} alt={user.name} className="speedDialIcon" />}>
+                        icon={<img src={user?.avatar ? user?.avatar?.url : userpng} alt={user?.name} className="speedDialIcon" />}>
 
 
-                {
-                    options.map((item, i) => (
-                        <SpeedDialAction key={i} icon={item.icon} tooltipTitle={item.name} tooltipOpen onClick={item.func}></SpeedDialAction>
+                        {
+                            options.map((item, i) => (
+                                <SpeedDialAction key={i} icon={item.icon} tooltipTitle={item.name} tooltipOpen onClick={item.func}></SpeedDialAction>
 
-                    ))
-                }
+                            ))
+                        }
 
-            </SpeedDial>
+                    </SpeedDial>
+                </Fragment>
+
+                : null
+            }
         </Fragment>
     )
 

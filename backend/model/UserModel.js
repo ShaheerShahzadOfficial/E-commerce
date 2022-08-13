@@ -20,6 +20,7 @@ const UserSchema = new mongoose.Schema({
         required: [true, "Please Enter Your Password"],
         validate: [validator.isStrongPassword, "Please Enter Strong Password"],
         minLenght: [8, "Password Should have Atleast 8 character"],
+        select: false
     },
     avatar: {
         public_id: {

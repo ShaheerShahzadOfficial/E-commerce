@@ -1,13 +1,14 @@
 .ProfileContainer{
     display: flex;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     max-width: 100%;
     top: 0;
     left: 0%;
     position: fixed;
     background-color: white;
 
+    
 }
 
 .ProfileContainer > div{
@@ -97,8 +98,6 @@ background-color: black;        font: 900 1.5vmax "Roboto";
       @media screen and (max-width: 700px) {
         .ProfileContainer {
           flex-direction: column;
-          overflow: hidden;
-
         }
       
         .ProfileContainer > div:first-child >img{

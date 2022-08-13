@@ -14,7 +14,8 @@ const RegisterUser = async (req, res, next) => {
     let { name, email, password } = req.body
 
 
-
+    let public_id;
+    let secure_url;
     const file = req.files.avatar
 
     const myCloud = await cloudinary.v2.uploader.upload(file.tempFilePath, {
@@ -41,8 +42,8 @@ const RegisterUser = async (req, res, next) => {
             const user = await User.create({
                 name, email, password: hash,
                 avatar: {
-                    public_id: pid,
-                    url: url,
+                    public_id: public_id,
+                    url: secure_url,
                 }
             }).then((result) => {
                 res.status(201).json({
@@ -272,7 +273,7 @@ const UpdatePassword = async (req, res, next) => {
 
     let { newPassword, confirmPassword } = req.body
 
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user.id).select("+password");
 
     if (!newPassword || !confirmPassword) {
         return next(new ErrorHandler("Enter newPassword , ConfirmPassword", 400));

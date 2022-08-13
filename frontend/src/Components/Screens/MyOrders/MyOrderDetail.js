@@ -15,7 +15,7 @@ const MyorderDetails = ({ match }) => {
 
 
     const { loading, orderDetails } = useSelector(state => state.OrderDetails)
-    const { user } = useSelector(state => state.Authentication)
+    // const { user } = useSelector(state => state.Authentication)
 
 
     return (
@@ -24,25 +24,25 @@ const MyorderDetails = ({ match }) => {
                 <div className="orderDetailsPage">
                     <div className="orderDetailsContainer">
                         <Typography component="h1">
-                            Order #{orderDetails && orderDetails._id}
+                            Order #{orderDetails && orderDetails?._id}
                         </Typography>
                         <Typography>Shipping Info</Typography>
                         <div className="orderDetailsContainerBox">
                             <div>
                                 <p>Name:</p>
-                                <span>{user.name}</span>
+                                <span>{orderDetails?.User?.name}</span>
                             </div>
                             <div>
                                 <p>Phone:</p>
                                 <span>
-                                    {orderDetails && orderDetails.shippingInfo.phoneNumber}
+                                    {orderDetails && orderDetails?.shippingInfo?.phoneNumber}
                                 </span>
                             </div>
                             <div>
                                 <p>Address:</p>
                                 <span>
                                     {orderDetails &&
-                                        `${orderDetails.shippingInfo.address}, ${orderDetails.shippingInfo.city}, ${orderDetails.shippingInfo.state}, ${orderDetails.shippingInfo.postalCode}`}
+                                        `${orderDetails?.shippingInfo?.address}, ${orderDetails?.shippingInfo?.city}, ${orderDetails?.shippingInfo?.state}, ${orderDetails?.shippingInfo?.postalCode}`}
                                 </span>
                             </div>
                         </div>
@@ -50,7 +50,7 @@ const MyorderDetails = ({ match }) => {
 
                             <div>
                                 <p>Amount:</p>
-                                <span>{orderDetails && orderDetails.totalPrice}</span>
+                                <span>{orderDetails && orderDetails?.totalPrice}</span>
                             </div>
                         </div>
 
@@ -59,12 +59,12 @@ const MyorderDetails = ({ match }) => {
                             <div>
                                 <p
                                     className={
-                                        orderDetails && orderDetails.status === "Delivered"
+                                        orderDetails && orderDetails?.status === "Delivered"
                                             ? "greenColor"
                                             : "redColor"
                                     }
                                 >
-                                    {orderDetails && orderDetails.status}
+                                    {orderDetails && orderDetails?.status}
                                 </p>
                             </div>
                         </div>
@@ -73,8 +73,8 @@ const MyorderDetails = ({ match }) => {
                     <div className="orderDetailsCartItems">
                         <Typography>Order Items:</Typography>
                         <div className="orderDetailsCartItemsContainer">
-                            {orderDetails.orderItem &&
-                                orderDetails.orderItem.map((item) => (
+                            {orderDetails?.orderItem &&
+                                orderDetails?.orderItem?.map((item) => (
                                     <div key={item.product}>
                                         <img src={item.image} alt="Product" />
                                         <Link to={`/product/${item.product}`}>

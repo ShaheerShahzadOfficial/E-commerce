@@ -49,8 +49,8 @@ const Home = () => {
                     loading ? (
                         <Loader />
                     ) : (
-                        products && products.map(products => (
-                            <Product key={products._id} product={products} />
+                        products && products?.map(products => (
+                            <Product key={products?._id} product={products} />
                         ))
                     )
                 }
