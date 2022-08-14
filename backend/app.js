@@ -9,7 +9,6 @@ import fileUpload from "express-fileupload"
 import OrderRoute from "./Routes/Order/Order.js";
 import helmet from "helmet";
 
-import * as path from 'path'
 
 const app = express()
 
@@ -39,9 +38,13 @@ app.use("/order", OrderRoute)
 
 
 if (process.env.NODE_ENV === "production") {
-    app.use(express.static("frontend/build"))
+    app.use(express.static("../frontend/build"))
 }
 
+
+app.get('/', (req, res) => {
+    res.send('Hello from Express!')
+})
 
 // Error  🤦‍♂️🤦‍♂️
 
