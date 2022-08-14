@@ -43,7 +43,7 @@ if (process.env.NODE_ENV === "production") {
 
 
 app.get('/', (req, res) => {
-    res.send('Hello from Express!')
+    res.render('Hello from Express!')
 })
 
 // Error  🤦‍♂️🤦‍♂️
