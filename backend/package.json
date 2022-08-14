@@ -11,10 +11,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "nodemon backend/server.js",
-    "frontend-Install": "cd frontend && npm install",
-    "frontend-build": "cd frontend  && npm run build",
-    "heroku-postbuild": "npm run frontend-Install npm run frontend-build"
+    "dev": "nodemon server.js",
+    "heroku-postbuild": "npm start"
   },
   "author": "ShaheerShahzad",
   "license": "ISC",
