@@ -108,6 +108,7 @@ const Login = async (req, res, next) => {
                             Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000),
                         httpOnly: false,
                         maxAge: 120 * 60 * 60 * 1000,
+                        secure: true
                     })
 
 
@@ -168,7 +169,7 @@ const ForgotPassword = async (req, res, next) => {
     const resetToken = user.getResetPasswordToken();
     await user.save({ validateBeforeSave: false })
 
-    const ResetPasswordUrl = `${req.protocol}://${"localhost:3000"}/user/resetPassword/${resetToken}`
+    const ResetPasswordUrl = `${"https://theforeverfashions.web.app"}/user/resetPassword/${resetToken}`
     const message = `Your password reset url is :- \n\n ${ResetPasswordUrl}\n\n If you have not requested this Email, then please ignore it `;
 
 

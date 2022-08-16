@@ -135,13 +135,14 @@ const deleteProduct = async (req, res, next) => {
         return next(new ErrorHandler("Product Not Found", 404))
     }
 
-    await product.remove()
+    await product.delete()
     res.status(200).json({
         success: true,
         msg: "product is deleted successfully"
     })
 
 }
+
 
 
 
